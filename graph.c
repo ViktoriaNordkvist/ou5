@@ -12,7 +12,7 @@
 // Anonymous declarations of node and graph.
 struct node {
 	bool seen;
-	char name[41]; //KAOS
+	char name[41];
 	dlist *neighbours;
 
 };
@@ -35,14 +35,7 @@ struct graph {
 *
 */
 bool nodes_are_equal(const node *n1,const node *n2){
-	node *node1 = NULL;
-	node *node2 = NULL;
-	strcpy(node1->name, n1->name);
-	strcpy(node2->name, n2->name);
-	if(strcmp(node1->name, node2->name) == 0){
-		return true;
-	}
-	return false;
+	return (n1 == n2);
 }
 
 // =================== GRAPH STRUCTURE INTERFACE ======================
@@ -105,13 +98,12 @@ bool graph_has_edges(const graph *g){
 */
 graph *graph_insert_node(graph *g, const char* s){
 
-	// insert i arrayen, nodes
-
-
+	// insert i arrayen, nodes.
 	int pos = array_1d_low(g->entries);
 	struct node *n = malloc(sizeof(struct node));
 	strcpy(n->name, s);
 	n->neighbours = dlist_empty(NULL);
+	n->seen = false;
 
 	while(array_1d_has_value(g->entries, pos)){
 		pos++;
@@ -133,13 +125,13 @@ graph *graph_insert_node(graph *g, const char* s){
 node *graph_find_node(const graph *g, const char *s){
 
 	int i = array_1d_low(g->entries);
-	char *name = NULL;
+	char name[41];
 	node *n = NULL;
 	strcpy(name, s);
 	while(array_1d_has_value(g->entries, i)) {
 		//node *temp = array_1d_inspect_value(g->entries, i);
 		n = array_1d_inspect_value(g->entries ,i);
-		if ( n->name == name){
+		if ( strcmp(n->name, name) == 0){
 			return n;
 		}
 		i++;
@@ -169,6 +161,7 @@ bool graph_node_is_seen(const graph *g, const node *n){
 	}
 	//behövs en returnsats här, det verkar som att funktionen utgår från att
 	// noden finns i grafen??
+	return false;
 }
 
 /**
@@ -330,6 +323,8 @@ void graph_kill(graph *g){
 *
 * Returns: Nothing.
 */
+
+/*
 void graph_print(const graph *g){ //KAN TA BORT DENNA SEN VID INLÄMNING!!
 	int pos = array_1d_low(g->entries);
 	node *current_node = NULL;
@@ -339,4 +334,4 @@ void graph_print(const graph *g){ //KAN TA BORT DENNA SEN VID INLÄMNING!!
 		dlist_print(current_node->neighbours, printf); // vad borde det stå istället för fprint????
 		pos++;
 	}
-}
+}*/

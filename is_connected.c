@@ -10,83 +10,99 @@
 #include "queue.h"
 #include "list.h"
 
+/*
+ * Name: is_connected.c
+ *
+ * Description: This program is used to determine wether
+ * or not two airports are connected throught a flightpath
+ * based on information through an inserted file.
+ *
+ * Authors: Viktoria Nordkvist (id19vnt@cs.umu.se)
+ *	    	Tobias Bergström (id19tbm@cs.umu.se)
+ *
+ * Version information:
+ *   2018-03-18: v1.0, first public version.
+ */
 
+
+/**
+* find_path() - Check if there is a path.
+* @g: Graph to check.
+* @n: Origin Node.
+* @n: Destination Node.
+*
+* Returns: True if graph has any edges, otherwise false.
+*/
 bool find_path(graph *g,node *src,node *dest){
-	node *node_temp;
-	dlist_pos *pos = 0;
-	char *temp_name = NULL;
-	dlist list_temp = src->neighbours;
+	fprintf(stderr, "%s\n","Hewwo!" );
 
-		if(nodes_are_equal(src, dest)){
-			return true;
+	//Variable Declarations
+	node *node_temp;
+	dlist_pos pos = 0;
+	char *temp_name = NULL;
+	dlist *list_temp = graph_neighbours(g, src);
+
+	//If both inputed nodes are the same, return true.
+	if(nodes_are_equal(src, dest)){
+		fprintf(stderr, "%s\n","Tjo bre mannen asså walla orkar inte mann." );
+		return true;
+	}
+
+	//Remove the start node, go through the children lists and create a queue.
+	// ta bort start noden. gå igenom barnens listor. bygg kö.
+	else{
+		fprintf(stderr, "%s\n","ELSE" );
+		queue *q = queue_empty(NULL);
+		q = queue_enqueue(q, src);
+		pos = dlist_first(list_temp);
+
+		//Queues the origin nodes neighbouring nodes until we reach the end of the list.
+		while(!dlist_is_end(list_temp, pos)){
+			fprintf(stderr, "%s\n","WHILE 1" );
+			temp_name = dlist_inspect(list_temp, pos);
+			node_temp = graph_find_node(g, temp_name);
+			queue_enqueue(q, node_temp);
+
+			pos = dlist_next(list_temp, pos);
 		}
-		// ta bort start noden. gå igenom barnens listor. bygg kö.
-		else{
-			queue *q = queue_empty(NULL);
-			q = queue_enqueue(q, src);
+
+		graph_node_set_seen(g, src, true);
+		queue_dequeue(q);
+
+		//Loops through the queue and adds each nodes neighbours to the queue if not seen.
+		while (!queue_is_empty(q)) {
+			fprintf(stderr, "%s\n","WHILE 2" );
+			node_temp = queue_front(q);
+			list_temp = graph_neighbours(g, node_temp);
 			pos = dlist_first(list_temp);
 
+			//Check if the current node is the destination node.
+			if(nodes_are_equal(node_temp, dest)){
+				fprintf(stderr, "%s\n","Tjo bre mannen asså walla orkar inte mann." );
+				queue_kill(q);
+				return true;
+			}
+
+			//Loops through the node list and adds unseen neighbours to the queue.
 			while(!dlist_is_end(list_temp, pos)){
+
 				temp_name = dlist_inspect(list_temp, pos);
 				node_temp = graph_find_node(g, temp_name);
-				queue_enqueue(q, node_temp);
+
+				if(!graph_node_is_seen(g, node_temp)){
+					queue_enqueue(q, node_temp);
+				}
 
 				pos = dlist_next(list_temp, pos);
+				graph_node_set_seen(g, node_temp, true);
 			}
-
-			graph_node_set_seen(g, src, true);
 			queue_dequeue(q);
-
-			while (!queue_is_empty(q)) {
-				node_temp = queue_front(q);
-				list_temp = node_temp->neighbours;
-				pos = dlist_first(list_temp);
-				if(node_temp->name == dest->name){
-					return true;
-				}
-
-				while(!dlist_is_end(list_temp), pos){
-
-					temp_name = dlist_inspect(list_temp, pos);
-					node_temp = graph_find_node(g, temp_name);
-
-					if(!graph_node_is_seen(g, node_temp)){
-						queue_enqueue(q, node_temp);
-					}
-
-					pos = dlist_next(list_temp, pos);
-					graph_node_set_seen(g, node_temp, true);
-					queue_dequeue(q);
-				}
-			}
-
-			/*node_temp = graph_find_node(g,src->name);
-			q = queue_enqueue(q, node_temp);
-			while(!queue_is_empty(q)){
-				dlist *list_temp = graph_neighbours(g, node_temp);
-				int pos = dlist_first(list_temp);
-				while(!dlist_is_end(list_temp, pos)){
-					char name_temp = dlist_inspect(list_temp, pos);
-					if(name_temp == dest){
-						return true;
-					}
-					else{
-						if(graph_node_is_seen(g, node_temp)){
-							continue;
-						}
-						q = queue_enqueue(q, graph_find_node(g, name_temp));
-						pos = dlist_next(list_temp);
-					}
-
-				}
-					graph_node_set_seen(g, node_temp, true);
-					queue_dequeue(q);
-					node_temp = queue_front(q);
-				}*/
-
-
-			//}
 		}
+
+		queue_dequeue(q);
+	}
+	fprintf(stderr, "%s\n","Nein das ist nicht gut." );
+	return false;
 }
 
 
@@ -112,7 +128,7 @@ int last_non_white_space(const char *s)
 	// Start at last char.
 	int i = strlen(s) - 1;
 	// Move back until we hit beginning-of-line as long as we're
-	// loooking at white-space.
+	// looking at white-space.
 	while (i >= 0 && isspace(s[i])) {
 		i--;
 	}
@@ -146,47 +162,67 @@ bool line_is_digit(const char *s){
 	return false;
 }
 
+/**
+* read_file() - Check if there is a path.
+* @g: Graph to modify.
+* @n: File to be read.
+*
+* Returns: NULL.
+*/
 void read_file(graph *g, const char *name){ // const char name är namnet på filen
 
 	const int BUFSIZE = 41;
 	int maxnodes = 0;
+	maxnodes = maxnodes; // Något är tokigt, maxnodes används men utan detta kompilerar det inte.
 	char line[BUFSIZE];
 	char src[BUFSIZE];
 	char dest[BUFSIZE];
 	FILE *in; // Pointer to input file
-	in = fopen(name, 'r');
+	in = fopen(name, "r");
 	bool first_non_comment = true;
 
-
+	//Check if the file can be found.
 	if(in == NULL){
-		printf("Couldn't open file, program terminated.");
+		printf("Error: File could does not exist. Program terminated.");
 		exit(EXIT_FAILURE);
 	}
+
+	// Read the file
 	while (fgets(line, BUFSIZE, in) != NULL){
+
+		//Skip current line if it is a comment or blank
 		if(line_is_comment(line) || line_is_blank(line)){
 			continue;
 		}
 
+		//Check if the first the first non-comment line to see if it is an integer.
 		if(first_non_comment){
 			if (line_is_digit(line)){
 				maxnodes = atoi(line);
 				continue;
 			}
 			else{
+				printf("Error: First non-comment line is not an integer. Program terminated.");
 				exit(EXIT_FAILURE);
 			}
 		}
-		sscanf(line, "%s %s ", src, dest); //lägg till och ta in en till och se satt det är en kommentar
 
+		//Scan the first two words(nodes) on the line and save them in src and dest accordingly.
+		sscanf(line, "%s %s ", src, dest);
+		g = graph_insert_node(g, src);
+		g = graph_insert_node(g, dest);
+		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
+
+		//Exit with error if the inserted nodes are the same.
 		if(strcmp(src, dest) == 0){
 			exit(EXIT_FAILURE);
 		}
-		else if(strcmp(dest, NULL) == 0){
+
+		//Exit with error if the destination node equals NULL.
+		else if(dest == '\0'){
 			exit(EXIT_FAILURE);
 		}
 
-		graph_insert_node(g, src);
-		graph_insert_edge(g, src, dest);
 		//puts(line);
 		first_non_comment = false;
 	}
@@ -194,11 +230,50 @@ void read_file(graph *g, const char *name){ // const char name är namnet på fi
 	fclose(in);
 }
 
-
+//Main function. duh.
 int main(void){
 
+
+	graph *g = graph_empty(8);
+	    char strong[41] = "hej";
+	    char strong2[41] = "isk";
+	    char strong3[41] = "jag";
+	    g = graph_insert_node(g,strong);
+	    g = graph_insert_node(g,strong2);
+	    g = graph_insert_node(g,strong3);
+
+	    node *no1 = graph_find_node(g,strong);
+	    node *no2 = graph_find_node(g,strong2);
+	    node *no3 = graph_find_node(g,strong3);
+
+	    g = graph_insert_edge(g,no1,no2);
+	    g = graph_insert_edge(g,no1,no3);
+		find_path(g,no1,no2);
+	    find_path(g,no2,no3);
+		graph_kill(g);
+
+/*
 	graph *g = NULL;
 	g = graph_empty(10);
-	read_file(g, "airmap1.map");
+	node *src;
+	node *dest;
+	char str[4] = "UME";
+	char str_2[4] = "UME";
+
+
+	src->neighbours = dlist_empty(NULL);
+	dest->neighbours = dlist_empty(NULL);
+	src->seen = false;
+	dest->seen = false;
+	src->name = "UME";
+	dest->name = "UME";
+
+	g = graph_insert_node(g, str);
+	g = graph_insert_node(g, str_2);
+	src = graph_find_node(g, str);
+	dest = graph_find_node(g, str_2);
+	//read_file(g, "airmap1.map");
+	find_path(g, src, dest);
+*/
 	return 0;
 }
