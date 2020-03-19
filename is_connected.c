@@ -253,7 +253,7 @@ int main(void){
 
 
 	while(running){
-		fprintf(stderr, "%s\n", "Enter origin and destination (quit to exit): " );
+		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 		scanf("%40s %40s\n", origin, destination);
 
 		if(strcmp(origin, "quit")){
