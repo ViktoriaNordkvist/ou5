@@ -233,6 +233,7 @@ void read_file(graph *g, const char *name){ // const char name är namnet på fi
 //Main function. duh.
 int main(void){
 
+	graph *g = graph_empty(20);
 	read_file(g, "airmap1.map");
 
 
