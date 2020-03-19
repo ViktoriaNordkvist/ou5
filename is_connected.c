@@ -265,7 +265,7 @@ int main(void){
 		node2 = graph_find_node(g,destination);
 
 		if(node1 == NULL && node2 == NULL){
-			fprintf(stderr, "%s\n", "Neither origin or destination exists");
+			fprintf(stderr, "%s\n", "None of the nodes exists");
 			continue;
 		}
 		if(node1 == NULL){
