@@ -204,6 +204,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 			fprintf(stderr, "%s\n", "inne i if(first_non_comment)");
 			if (line_is_digit(line)){
 				maxnodes = atoi(line);
+				fprintf(stderr, "%s\n", "Här allokeras minne :)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				g = graph_empty(maxnodes);
 				first_non_comment = false;
 				continue;
