@@ -244,6 +244,7 @@ int main(void){
 	const int BUFSIZE = 41;
 	char origin[BUFSIZE];
 	char destination[BUFSIZE];
+	char quit = "quit";
 	node *node1;
 	node *node2;
 	bool running = true;
@@ -256,7 +257,7 @@ int main(void){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 		scanf("%40s %40s\n", origin, destination);
 
-		if(strcmp(origin, "quit")){
+		if(strcmp(origin, quit)){
 			fprintf(stderr, "%s\n", "Normal exit.");
 			return 0;
 		}
