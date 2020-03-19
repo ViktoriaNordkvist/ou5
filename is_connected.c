@@ -170,7 +170,7 @@ bool find_path(graph *g,node *src,node *dest){
 *
 * Returns: NULL.
 */
-graph *read_file(const char *name){ // const char name är namnet på filen
+viod read_file(graph *g, const char *name){ // const char name är namnet på filen
 
 	const int BUFSIZE = 41;
 	int maxnodes = 0;
@@ -181,7 +181,7 @@ graph *read_file(const char *name){ // const char name är namnet på filen
 	FILE *in; // Pointer to input file
 	in = fopen(name, "r");
 	bool first_non_comment = true;
-	graph *g;
+
 
 
 	//Check if the file can be found.
@@ -235,7 +235,6 @@ graph *read_file(const char *name){ // const char name är namnet på filen
 	}
 	fprintf(stderr, "%s\n", "Done");
 	fclose(in);
-	return g;
 }
 
 //Main function. duh.
@@ -248,7 +247,7 @@ int main(void){
 	//bool running = true;
 	//bool path_found = false;
 	graph *g;
-	g = read_file("airmap1.map");
+	read_file(g,"airmap1.map");
 
 
 	/*while(running){
