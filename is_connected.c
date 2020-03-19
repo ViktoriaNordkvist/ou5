@@ -246,8 +246,8 @@ int main(void){
 	char destination[BUFSIZE];
 	bool running = true;
 	char quit[5] = "quit";
-	node *node1;
-	node *node2;
+	//node *node1;
+	//node *node2;
 	//bool path_found;
 	graph *g;
 
@@ -263,11 +263,12 @@ int main(void){
 			fprintf(stderr, "%s\n", "Normal exit.");
 			return 0;
 		}
-
-		node1 = graph_find_node(g,origin);
-		node2 = graph_find_node(g,destination);
-
 		running = false;
+
+		//node1 = graph_find_node(g,origin);
+		//node2 = graph_find_node(g,destination);
+
+
 /*
 		if(node1 == NULL){
 			fprintf(stderr, "%s\n", "Origin does not exist");
