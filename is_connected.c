@@ -241,10 +241,10 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 //Main function. duh.
 int main(void){
-	/*const int BUFSIZE = 41;
+	const int BUFSIZE = 41;
 	char origin[BUFSIZE];
 	char destination[BUFSIZE];
-	char quit[5] = "quit";
+	/*char quit[5] = "quit";
 	node *node1;
 	node *node2;
 	bool running = true;
