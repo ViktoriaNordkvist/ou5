@@ -253,11 +253,11 @@ int main(void){
 
 	g = read_file(g,"airmap1.map");
 
-/*
+
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 		scanf("%40s %40s", origin, destination);
-
+/*
 		if(strcmp(origin, quit) == 0){
 			fprintf(stderr, "%s\n", "Normal exit.");
 			return 0;
@@ -284,9 +284,9 @@ int main(void){
 		else {
 			fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
 
-		}
+		}*/
 	}
-*/
+
 	graph_kill(g);
 	return 0;
 	}
