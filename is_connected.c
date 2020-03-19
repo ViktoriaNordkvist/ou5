@@ -170,7 +170,7 @@ bool find_path(graph *g,node *src,node *dest){
 *
 * Returns: NULL.
 */
-viod read_file(graph *g, const char *name){ // const char name är namnet på filen
+void read_file(graph *g, const char *name){ // const char name är namnet på filen
 
 	const int BUFSIZE = 41;
 	int maxnodes = 0;
