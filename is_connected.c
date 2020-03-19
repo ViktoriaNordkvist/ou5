@@ -186,7 +186,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 	//Check if the file can be found.
 	if(in == NULL){
-		printf("Error: File does not exist. Program terminated.");
+		fprintf(stderr, "%s\n", "Error: File does not exist. Program terminated.");
 		exit(EXIT_FAILURE);
 	}
 
@@ -195,26 +195,26 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 		//Skip current line if it is a comment or blank
 		if(line_is_comment(line) || line_is_blank(line)){
-			fprintf(stderr, "%s\n", "inne i if(line_is_comment...)");
+			//fprintf(stderr, "%s\n", "inne i if(line_is_comment...)");
 			continue;
 		}
 
 		//Check if the first the first non-comment line to see if it is an integer.
 		if(first_non_comment){
-			fprintf(stderr, "%s\n", "inne i if(first_non_comment)");
+			//fprintf(stderr, "%s\n", "inne i if(first_non_comment)");
 			if (line_is_digit(line)){
 				maxnodes = atoi(line);
-				fprintf(stderr, "%s\n", "Här allokeras minne :)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				//fprintf(stderr, "%s\n", "Här allokeras minne :)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				g = graph_empty(maxnodes*2);
 				first_non_comment = false;
 				continue;
 			}
 			else{
-				printf("Error: First non-comment line is not an integer. Program terminated.");
+				fprintf(stderr, "%s\n","Error: First non-comment line is not an integer. Program terminated.");
 				exit(EXIT_FAILURE);
 			}
 		}
-		fprintf(stderr, "%s\n", "Time to scan" );
+		//fprintf(stderr, "%s\n", "Time to scan" );
 		//Scan the first two words(nodes) on the line and save them in src and dest accordingly.
 		if(sscanf(line, "%s %s ", src, dest) != 2) {
 			fprintf(stderr, "%s\n", "Error: The file does not have the right format\n");
@@ -225,8 +225,8 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		if(strcmp(src, dest) == 0){
 			exit(EXIT_FAILURE);
 		}
-		fprintf(stderr, "%s\n", "About to print");
-		fprintf(stderr, "%s %s\n", src, dest);
+		//fprintf(stderr, "%s\n", "About to print");
+		//fprintf(stderr, "%s %s\n", src, dest);
 		g = graph_insert_node(g, src);
 		g = graph_insert_node(g, dest);
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
@@ -234,7 +234,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		//puts(line);
 		first_non_comment = false;
 	}
-	fprintf(stderr, "%s\n", "Done");
+	//fprintf(stderr, "%s\n", "Done");
 	fclose(in);
 	return g;
 }
