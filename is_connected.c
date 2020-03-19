@@ -99,7 +99,7 @@ bool find_path(graph *g,node *src,node *dest){
 			queue_dequeue(q);
 		}
 
-		//queue_dequeue(q);
+		queue_kill(q);
 	}
 	fprintf(stderr, "%s\n","Nein das ist nicht gut." );
 	return false;
