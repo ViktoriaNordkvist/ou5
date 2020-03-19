@@ -126,7 +126,7 @@ node *graph_find_node(const graph *g, const char *s){
 
 	int i = array_1d_low(g->entries);
 	char name[41];
-	node *n = NULL;
+	node *n;
 	strcpy(name, s);
 	while(array_1d_has_value(g->entries, i)) {
 		//node *temp = array_1d_inspect_value(g->entries, i);
