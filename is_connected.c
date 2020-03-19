@@ -279,10 +279,10 @@ int main(void){
 		path_found = find_path(g, node1, node2);
 
 		if(path_found){
-			fprintf(stderr, "\nThere is a path from %s to %s.\n", origin, destination);
+			fprintf(stderr, "There is a path from %s to %s.\n", origin, destination);
 		}
 		else {
-			fprintf(stderr, "\nThere is no path from %s to %s.\n", origin, destination);
+			fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
 
 		}
 	}
