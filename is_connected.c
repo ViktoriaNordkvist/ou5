@@ -263,7 +263,6 @@ int main(void){
 			fprintf(stderr, "%s\n", "Normal exit.");
 			break;
 		}
-		running = false;
 
 		node1 = graph_find_node(g,origin);
 		node2 = graph_find_node(g,destination);
