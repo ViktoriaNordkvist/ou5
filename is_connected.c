@@ -139,6 +139,7 @@ bool find_path(graph *g,node *src,node *dest){
 				return true;
 			}
 
+
 			//Loops through the node list and adds unseen neighbours to the queue.
 			while(!dlist_is_end(list_temp, pos)){
 
