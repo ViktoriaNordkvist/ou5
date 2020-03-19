@@ -278,10 +278,9 @@ int main(void){
 			fprintf(stderr, "\nThere is a path from %s to %s.\n", origin, destination);
 		}
 		running = false;
-}
+	}
 
 
 
 	return 0;
 	}
-}
