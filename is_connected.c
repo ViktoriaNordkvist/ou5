@@ -277,8 +277,8 @@ int main(void){
 		if(path_found){
 			fprintf(stderr, "\nThere is a path from %s to %s.\n", origin, destination);
 		}
-
-
+		running = false;
+}
 
 
 
