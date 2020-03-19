@@ -212,7 +212,7 @@ graph *read_file(const char *name){ // const char name är namnet på filen
 				exit(EXIT_FAILURE);
 			}
 		}
-
+		fprintf(stderr, "%s\n", "Time to scan" );
 		//Scan the first two words(nodes) on the line and save them in src and dest accordingly.
 		if(sscanf(line, "%s %s ", src, dest) != 2) {
 			fprintf(stderr, "%s\n", "Error: The file does not have the right format\n");
@@ -223,7 +223,7 @@ graph *read_file(const char *name){ // const char name är namnet på filen
 		if(strcmp(src, dest) == 0){
 			exit(EXIT_FAILURE);
 		}
-
+		fprintf(stderr, "%s\n", "About to print");
 		fprintf(stderr, "%s %s\n", src, dest);
 		g = graph_insert_node(g, src);
 		g = graph_insert_node(g, dest);
@@ -232,29 +232,29 @@ graph *read_file(const char *name){ // const char name är namnet på filen
 		//puts(line);
 		first_non_comment = false;
 	}
-
+	fprintf(stderr, "%s\n", "Done");
 	fclose(in);
 	return g;
 }
 
 //Main function. duh.
 int main(void){
-	//const int BUFSIZE = 41;
-	//char origin[BUFSIZE];
-	//char destination[BUFSIZE];
-	//node *node1;
-	//node *node2;
-	//bool running = true;
-	//bool path_found = false;
+	const int BUFSIZE = 41;
+	char origin[BUFSIZE];
+	char destination[BUFSIZE];
+	node *node1;
+	node *node2;
+	bool running = true;
+	bool path_found = false;
 	graph *g;
 	g = read_file("airmap1.map");
 	graph_kill(g);
 
-/*	while(running){
+	while(running){
 		fprintf(stderr, "%s\n", "Enter origin and destination (quit to exit): " );
 		scanf("%40s %40s\n", origin, destination);
 
-		if(origin[] == "quit"){
+		if(strcmp(origin, "quit")){
 			exit(EXIT_FAILURE);
 		}
 
@@ -265,7 +265,7 @@ int main(void){
 			fprintf(stderr, "%s\n", "Origin does not exist");
 			continue;
 		}
-		if(dest == NULL){
+		if(node2 == NULL){
 			fprintf(stderr, "%s\n", "Destination does not exist");
 			continue;
 		}
@@ -274,12 +274,13 @@ int main(void){
 		path_found = find_path(g, node1, node2);
 
 		if(path_found){
-			fprintf(stderr, "\nThere is a path from %s to %s.\n", );
+			fprintf(stderr, "\nThere is a path from %s to %s.\n", origin, destination);
 		}
 
-*/
+
 
 
 
 	return 0;
+	}
 }
