@@ -236,7 +236,6 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 	}
 	fprintf(stderr, "%s\n", "Done");
 	fclose(in);
-	graph_kill(g);
 	return g;
 }
 
