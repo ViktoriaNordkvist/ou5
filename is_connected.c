@@ -139,7 +139,6 @@ bool find_path(graph *g,node *src,node *dest){
 				return true;
 			}
 
-
 			//Loops through the node list and adds unseen neighbours to the queue.
 			while(!dlist_is_end(list_temp, pos)){
 
@@ -181,8 +180,6 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 	FILE *in; // Pointer to input file
 	in = fopen(name, "r");
 	bool first_non_comment = true;
-
-
 
 	//Check if the file can be found.
 	if(in == NULL){
@@ -267,8 +264,10 @@ int main(void){
 		node1 = graph_find_node(g,origin);
 		node2 = graph_find_node(g,destination);
 
-
-
+		if((node1 == NULL && node2 == NULL){
+			fprintf(stderr, "%s\n", "Neither origin or destination exists");
+			continue;
+		}
 		if(node1 == NULL){
 			fprintf(stderr, "%s\n", "Origin does not exist");
 			continue;
@@ -277,7 +276,6 @@ int main(void){
 			fprintf(stderr, "%s\n", "Destination does not exist");
 			continue;
 		}
-
 
 		path_found = find_path(g, node1, node2);
 

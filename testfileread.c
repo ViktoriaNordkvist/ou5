@@ -55,7 +55,8 @@ int main(void){
 	char line[BUFSIZE];
 	char node1[BUFSIZE];
 	char node2[BUFSIZE];
-	FILE *in; // Pointer to input file
+	bool first_non_comment = true;
+	FILE *in; // Pointer to input fill
 	//int row_number = 1;
 	in = fopen("airmap1.map","r");
 
@@ -69,10 +70,24 @@ int main(void){
 			continue;
 		}
 
+		if(first_non_comment == true){
+			if
+			//testar om det är en siffra på fösta raden
+		}
+		else if(){}
+		else if(){}
+		else{}
+
+
+
+
+
 		// läs bara i den två första orden
 		sscanf(line, "%s %s ", node1, node2);
 
 		printf("%s %s \n", node1, node2 );
+
+		first_non_comment = false;
 	}
 
 
