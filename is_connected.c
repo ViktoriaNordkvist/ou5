@@ -246,9 +246,9 @@ int main(void){
 	char destination[BUFSIZE];
 	bool running = true;
 	char quit[5] = "quit";
-	//node *node1;
-	//node *node2;
-	//bool path_found;
+	node *node1;
+	node *node2;
+	bool path_found;
 	graph *g;
 
 	g = read_file(g,"airmap1.map");
