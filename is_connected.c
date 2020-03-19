@@ -25,6 +25,62 @@
  */
 
 
+ /* Return position of first non-whitespace character or -1 if only
+ 20 white-space is found. */
+ int first_non_white_space(const char *s){
+ 	int i = 0; // Start at first char.
+ 	// Advance until we hit EOL as long as we're loooking at white-space.
+ 	while (s[i] && isspace(s[i])) {
+ 		i++;
+ 	}
+ 	if (s[i]) {
+ 		return i; // Return position of found a non-white-space char.
+ 	} else {
+ 		return -1; // Return fail.
+ 	}
+ }
+
+ /* Return position of last non-whitespace character or -1 if only
+ white-space is found. */
+ int last_non_white_space(const char *s)
+ {
+ 	// Start at last char.
+ 	int i = strlen(s) - 1;
+ 	// Move back until we hit beginning-of-line as long as we're
+ 	// looking at white-space.
+ 	while (i >= 0 && isspace(s[i])) {
+ 		i--;
+ 	}
+ 	if (i >= 0) {
+ 		return i; // Return position of found a non-white-space char.
+ 	} else {
+ 		return -1; // Return fail.
+ 	}
+ }
+
+ /* Return true if s only contains whitespace */
+ bool line_is_blank(const char *s) {
+ 	// Line is blank if it only contained white-space chars.
+ 	return first_non_white_space(s) < 0;
+ }
+
+ /* Return true if s is a comment line, i.e. first non-whitespc char is '#' */
+ bool line_is_comment(const char *s){
+ 	int i = first_non_white_space(s);
+ 	return (i >= 0 && s[i] == '#');
+ }
+
+ //Returns true if the current line is an integer, false if not.
+ bool line_is_digit(const char *s){
+
+ 	int temp = 0;
+ 	temp = atoi(s);
+ 	if(temp > 0){
+ 		return true;
+ 	}
+ 	return false;
+ }
+
 /**
 * find_path() - Check if there is a path.
 * @g: Graph to check.
@@ -106,62 +162,6 @@ bool find_path(graph *g,node *src,node *dest){
 }
 
 
-/* Return position of first non-whitespace character or -1 if only
-20 white-space is found. */
-int first_non_white_space(const char *s){
-	int i = 0; // Start at first char.
-	// Advance until we hit EOL as long as we're loooking at white-space.
-	while (s[i] && isspace(s[i])) {
-		i++;
-	}
-	if (s[i]) {
-		return i; // Return position of found a non-white-space char.
-	} else {
-		return -1; // Return fail.
-	}
-}
-
-/* Return position of last non-whitespace character or -1 if only
-white-space is found. */
-int last_non_white_space(const char *s)
-{
-	// Start at last char.
-	int i = strlen(s) - 1;
-	// Move back until we hit beginning-of-line as long as we're
-	// looking at white-space.
-	while (i >= 0 && isspace(s[i])) {
-		i--;
-	}
-	if (i >= 0) {
-		return i; // Return position of found a non-white-space char.
-	} else {
-		return -1; // Return fail.
-	}
-}
-
-/* Return true if s only contains whitespace */
-bool line_is_blank(const char *s) {
-	// Line is blank if it only contained white-space chars.
-	return first_non_white_space(s) < 0;
-}
-
-/* Return true if s is a comment line, i.e. first non-whitespc char is '#' */
-bool line_is_comment(const char *s){
-	int i = first_non_white_space(s);
-	return (i >= 0 && s[i] == '#');
-}
-
-//Returns true if the current line is an integer, false if not.
-bool line_is_digit(const char *s){
-
-	int temp = 0;
-	temp = atoi(s);
-	if(temp > 0){
-		return true;
-	}
-	return false;
-}
-
 /**
 * read_file() - Check if there is a path.
 * @g: Graph to modify.
@@ -169,21 +169,23 @@ bool line_is_digit(const char *s){
 *
 * Returns: NULL.
 */
-void read_file(graph *g, const char *name){ // const char name är namnet på filen
+graph *read_file(const char *name){ // const char name är namnet på filen
 
 	const int BUFSIZE = 41;
 	int maxnodes = 0;
-	maxnodes = maxnodes; // Något är tokigt, maxnodes används men utan detta kompilerar det inte.
+	//maxnodes = maxnodes; // Något är tokigt, maxnodes används men utan detta kompilerar det inte.
 	char line[BUFSIZE];
 	char src[BUFSIZE];
 	char dest[BUFSIZE];
 	FILE *in; // Pointer to input file
 	in = fopen(name, "r");
 	bool first_non_comment = true;
+	graph *g;
+
 
 	//Check if the file can be found.
 	if(in == NULL){
-		printf("Error: File could does not exist. Program terminated.");
+		printf("Error: File does not exist. Program terminated.");
 		exit(EXIT_FAILURE);
 	}
 
@@ -192,13 +194,17 @@ void read_file(graph *g, const char *name){ // const char name är namnet på fi
 
 		//Skip current line if it is a comment or blank
 		if(line_is_comment(line) || line_is_blank(line)){
+			fprintf(stderr, "%s\n", "inne i if(line_is_comment...)");
 			continue;
 		}
 
 		//Check if the first the first non-comment line to see if it is an integer.
 		if(first_non_comment){
+			fprintf(stderr, "%s\n", "inne i if(first_non_comment)");
 			if (line_is_digit(line)){
 				maxnodes = atoi(line);
+				g = graph_empty(maxnodes);
+				first_non_comment = false;
 				continue;
 			}
 			else{
@@ -208,33 +214,70 @@ void read_file(graph *g, const char *name){ // const char name är namnet på fi
 		}
 
 		//Scan the first two words(nodes) on the line and save them in src and dest accordingly.
-		sscanf(line, "%s %s ", src, dest);
-		g = graph_insert_node(g, src);
-		g = graph_insert_node(g, dest);
-		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
+		if(sscanf(line, "%s %s ", src, dest) != 2) {
+			fprintf(stderr, "%s\n", "Error: The file does not have the right format\n");
+			exit(EXIT_FAILURE);
+		}
 
 		//Exit with error if the inserted nodes are the same.
 		if(strcmp(src, dest) == 0){
 			exit(EXIT_FAILURE);
 		}
 
-		//Exit with error if the destination node equals NULL.
-		else if(dest == '\0'){
-			exit(EXIT_FAILURE);
-		}
+		fprintf(stderr, "%s %s\n", src, dest);
+		g = graph_insert_node(g, src);
+		g = graph_insert_node(g, dest);
+		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
 
 		//puts(line);
 		first_non_comment = false;
 	}
 
 	fclose(in);
+	return g;
 }
 
 //Main function. duh.
 int main(void){
+	//const int BUFSIZE = 41;
+	//char origin[BUFSIZE];
+	//char destination[BUFSIZE];
+	//node *node1;
+	//node *node2;
+	//bool running = true;
+	//bool path_found = false;
+	graph *g;
+	g = read_file("airmap1.map");
 
-	graph *g = graph_empty(20);
-	read_file(g, "airmap1.map");
+/*	while(running){
+		fprintf(stderr, "%s\n", "Enter origin and destination (quit to exit): " );
+		scanf("%40s %40s\n", origin, destination);
+
+		if(origin[] == "quit"){
+			exit(EXIT_FAILURE);
+		}
+
+		node1 = graph_find_node(g,origin);
+		node2 = graph_find_node(g,destination);
+
+		if(node1 == NULL){
+			fprintf(stderr, "%s\n", "Origin does not exist");
+			continue;
+		}
+		if(dest == NULL){
+			fprintf(stderr, "%s\n", "Destination does not exist");
+			continue;
+		}
+
+
+		path_found = find_path(g, node1, node2);
+
+		if(path_found){
+			fprintf(stderr, "\nThere is a path from %s to %s.\n", );
+		}
+
+*/
+
 
 
 	return 0;
