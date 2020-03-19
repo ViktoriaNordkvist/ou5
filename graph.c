@@ -309,6 +309,7 @@ void graph_kill(graph *g){
 		pos++;
 	}
 	array_1d_kill(g->entries);
+	free(g);
 }
 
 //iterera över alla noder i tabellen och deallokera antingen hela listan på en
