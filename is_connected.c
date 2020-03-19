@@ -250,12 +250,13 @@ int main(void){
 	bool running = true;
 	bool path_found;
 	graph *g;
+
 	g = read_file(g,"airmap1.map");
 
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
-		scanf("%40s %40s\n", origin, destination);
+		scanf("%40s %40s \n", origin, destination);
 
 		if(strcmp(origin, quit) == 0){
 			fprintf(stderr, "%s\n", "Normal exit.");
