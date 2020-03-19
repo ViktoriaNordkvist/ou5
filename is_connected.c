@@ -241,19 +241,19 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 //Main function. duh.
 int main(void){
-	const int BUFSIZE = 41;
+	/*const int BUFSIZE = 41;
 	char origin[BUFSIZE];
 	char destination[BUFSIZE];
 	char quit[5] = "quit";
 	node *node1;
 	node *node2;
 	bool running = true;
-	bool path_found;
+	bool path_found;*/
 	graph *g;
 
 	g = read_file(g,"airmap1.map");
 
-
+/*
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 		scanf("%40s %40s", origin, destination);
@@ -286,7 +286,7 @@ int main(void){
 
 		}
 	}
-
+*/
 	graph_kill(g);
 	return 0;
 	}
