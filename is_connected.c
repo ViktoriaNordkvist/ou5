@@ -90,7 +90,7 @@
 * Returns: True if graph has any edges, otherwise false.
 */
 bool find_path(graph *g,node *src,node *dest){
-	fprintf(stderr, "%s\n","Hewwo!" );
+	//fprintf(stderr, "%s\n","Hewwo!" );
 
 	//Variable Declarations
 	node *node_temp;
@@ -100,21 +100,21 @@ bool find_path(graph *g,node *src,node *dest){
 
 	//If both inputed nodes are the same, return true.
 	if(nodes_are_equal(src, dest)){
-		fprintf(stderr, "%s\n","Tjo bre mannen asså walla orkar inte mann." );
+		//fprintf(stderr, "%s\n","Tjo bre mannen asså walla orkar inte mann." );
 		return true;
 	}
 
 	//Remove the start node, go through the children lists and create a queue.
 	// ta bort start noden. gå igenom barnens listor. bygg kö.
 	else{
-		fprintf(stderr, "%s\n","ELSE" );
+		//fprintf(stderr, "%s\n","ELSE" );
 		queue *q = queue_empty(NULL);
 		q = queue_enqueue(q, src);
 		pos = dlist_first(list_temp);
 
 		//Queues the origin nodes neighbouring nodes until we reach the end of the list.
 		while(!dlist_is_end(list_temp, pos)){
-			fprintf(stderr, "%s\n","WHILE 1" );
+			//fprintf(stderr, "%s\n","WHILE 1" );
 			temp_name = dlist_inspect(list_temp, pos);
 			node_temp = graph_find_node(g, temp_name);
 			queue_enqueue(q, node_temp);
@@ -127,14 +127,14 @@ bool find_path(graph *g,node *src,node *dest){
 
 		//Loops through the queue and adds each nodes neighbours to the queue if not seen.
 		while (!queue_is_empty(q)) {
-			fprintf(stderr, "%s\n","WHILE 2" );
+			//fprintf(stderr, "%s\n","WHILE 2" );
 			node_temp = queue_front(q);
 			list_temp = graph_neighbours(g, node_temp);
 			pos = dlist_first(list_temp);
 
 			//Check if the current node is the destination node.
 			if(nodes_are_equal(node_temp, dest)){
-				fprintf(stderr, "%s\n","Tjo bre mannen asså walla orkar inte mann." );
+				//fprintf(stderr, "%s\n","Tjo bre mannen asså walla orkar inte mann." );
 				queue_kill(q);
 				return true;
 			}
@@ -158,7 +158,7 @@ bool find_path(graph *g,node *src,node *dest){
 
 		queue_kill(q);
 	}
-	fprintf(stderr, "%s\n","Nein das ist nicht gut." );
+	//fprintf(stderr, "%s\n","Nein das ist nicht gut." );
 	return false;
 }
 
