@@ -248,6 +248,7 @@ int main(void){
 	//bool path_found = false;
 	graph *g;
 	g = read_file("airmap1.map");
+	graph_kill(g);
 
 /*	while(running){
 		fprintf(stderr, "%s\n", "Enter origin and destination (quit to exit): " );
