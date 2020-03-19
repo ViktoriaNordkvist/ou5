@@ -244,10 +244,10 @@ int main(void){
 	const int BUFSIZE = 41;
 	char origin[BUFSIZE];
 	char destination[BUFSIZE];
+	bool running = true;
 	/*char quit[5] = "quit";
 	node *node1;
 	node *node2;
-	bool running = true;
 	bool path_found;*/
 	graph *g;
 
