@@ -241,23 +241,24 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 //Main function. duh.
 int main(void){
-	//const int BUFSIZE = 41;
-	//char origin[BUFSIZE];
-	//char destination[BUFSIZE];
-	//node *node1;
-	//node *node2;
-	//bool running = true;
-	//bool path_found = false;
+	const int BUFSIZE = 41;
+	char origin[BUFSIZE];
+	char destination[BUFSIZE];
+	node *node1;
+	node *node2;
+	bool running = true;
+	bool path_found;
 	graph *g;
 	g = read_file(g,"airmap1.map");
 
 
-	/*while(running){
+	while(running){
 		fprintf(stderr, "%s\n", "Enter origin and destination (quit to exit): " );
 		scanf("%40s %40s\n", origin, destination);
 
 		if(strcmp(origin, "quit")){
-			exit(EXIT_FAILURE);
+			fprintf(stderr, "%s\n", "Normal exit.");
+			return 0;
 		}
 
 		node1 = graph_find_node(g,origin);
@@ -278,10 +279,11 @@ int main(void){
 		if(path_found){
 			fprintf(stderr, "\nThere is a path from %s to %s.\n", origin, destination);
 		}
-		running = false;
-	}
-	*/
+		else {
+			fprintf(stderr, "\nThere is no path from %s to %s.\n", origin, destination);
 
+		}
+	}
 
 	graph_kill(g);
 	return 0;

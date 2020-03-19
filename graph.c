@@ -303,13 +303,11 @@ void graph_kill(graph *g){
 	int pos = array_1d_low(g->entries);
 	node *current_node = NULL;
 	while(array_1d_has_value(g->entries, pos)){
-		fprintf(stderr, "%s\n", "Kill i while");
 		current_node = array_1d_inspect_value(g->entries, pos);
 		dlist_kill(current_node->neighbours);
 		free(current_node);
 		pos++;
 	}
-	fprintf(stderr, "%s\n", "Kill");
 	array_1d_kill(g->entries);
 	free(g);
 }
