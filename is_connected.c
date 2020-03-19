@@ -248,7 +248,7 @@ int main(void){
 	char quit[5] = "quit";
 	node *node1;
 	node *node2;
-	bool path_found;
+	//bool path_found;
 	graph *g;
 
 	g = read_file(g,"airmap1.map");
@@ -267,6 +267,8 @@ int main(void){
 		node1 = graph_find_node(g,origin);
 		node2 = graph_find_node(g,destination);
 
+		running = false;
+/*
 		if(node1 == NULL){
 			fprintf(stderr, "%s\n", "Origin does not exist");
 			continue;
@@ -285,8 +287,8 @@ int main(void){
 		else {
 			fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
 
-		}
-		running = false;
+		}*/
+
 	}
 
 	graph_kill(g);
