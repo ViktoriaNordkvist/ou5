@@ -261,15 +261,15 @@ int main(void){
 
 		if(strcmp(origin, quit) == 0){
 			fprintf(stderr, "%s\n", "Normal exit.");
-			return 0;
+			break;
 		}
 		running = false;
 
-		//node1 = graph_find_node(g,origin);
-		//node2 = graph_find_node(g,destination);
+		node1 = graph_find_node(g,origin);
+		node2 = graph_find_node(g,destination);
 
 
-/*
+
 		if(node1 == NULL){
 			fprintf(stderr, "%s\n", "Origin does not exist");
 			continue;
@@ -288,7 +288,7 @@ int main(void){
 		else {
 			fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
 
-		}*/
+		}
 
 	}
 
