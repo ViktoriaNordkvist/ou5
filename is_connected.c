@@ -233,47 +233,8 @@ void read_file(graph *g, const char *name){ // const char name är namnet på fi
 //Main function. duh.
 int main(void){
 
-
-	graph *g = graph_empty(8);
-	    char strong[41] = "hej";
-	    char strong2[41] = "isk";
-	    char strong3[41] = "jag";
-	    g = graph_insert_node(g,strong);
-	    g = graph_insert_node(g,strong2);
-	    g = graph_insert_node(g,strong3);
-
-	    node *no1 = graph_find_node(g,strong);
-	    node *no2 = graph_find_node(g,strong2);
-	    node *no3 = graph_find_node(g,strong3);
-
-	    g = graph_insert_edge(g,no1,no2);
-	    g = graph_insert_edge(g,no1,no3);
-		find_path(g,no1,no2);
-	    find_path(g,no2,no3);
-		graph_kill(g);
-
-/*
-	graph *g = NULL;
-	g = graph_empty(10);
-	node *src;
-	node *dest;
-	char str[4] = "UME";
-	char str_2[4] = "UME";
+	read_file(g, "airmap1.map");
 
 
-	src->neighbours = dlist_empty(NULL);
-	dest->neighbours = dlist_empty(NULL);
-	src->seen = false;
-	dest->seen = false;
-	src->name = "UME";
-	dest->name = "UME";
-
-	g = graph_insert_node(g, str);
-	g = graph_insert_node(g, str_2);
-	src = graph_find_node(g, str);
-	dest = graph_find_node(g, str_2);
-	//read_file(g, "airmap1.map");
-	find_path(g, src, dest);
-*/
 	return 0;
 }
