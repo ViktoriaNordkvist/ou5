@@ -264,7 +264,7 @@ int main(void){
 		node1 = graph_find_node(g,origin);
 		node2 = graph_find_node(g,destination);
 
-		if((node1 == NULL && node2 == NULL){
+		if(node1 == NULL && node2 == NULL){
 			fprintf(stderr, "%s\n", "Neither origin or destination exists");
 			continue;
 		}
