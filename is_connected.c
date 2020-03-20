@@ -310,6 +310,7 @@ int main(void){
 
 		if(node1 == NULL && node2 == NULL){
 			fprintf(stderr, "%s\n", "None of the nodes exists");
+			fprintf(stderr, "%s", "\n" );
 			continue;
 		}
 		if(node1 == NULL){
