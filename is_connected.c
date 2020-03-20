@@ -276,7 +276,7 @@ int main(void){
 	int entry1;
 	int entry2;
 	int entries;
-	g = read_file(g,"5-big-map.map");
+	g = read_file(g,"6-single-edge.map");
 
 
 	while(running){
