@@ -263,7 +263,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 }
 
 //Main function. duh.
-int main(void){
+int main(int argc, const char **argv){
 	const int BUFSIZE = 41;
 	char origin[BUFSIZE];
 	char destination[BUFSIZE];
@@ -276,7 +276,7 @@ int main(void){
 	bool path_found;
 	graph *g = NULL;
 	int words;
-	g = read_file(g,"airmap1.map");
+	g = read_file(g, argv[1]);
 
 
 	while(running){
