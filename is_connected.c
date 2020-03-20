@@ -42,8 +42,7 @@
 
  /* Return position of last non-whitespace character or -1 if only
  white-space is found. */
- int last_non_white_space(const char *s)
- {
+ int last_non_white_space(const char *s){
  	// Start at last char.
  	int i = strlen(s) - 1;
  	// Move back until we hit beginning-of-line as long as we're
@@ -59,7 +58,7 @@
  }
 
  /* Return true if s only contains whitespace */
- bool line_is_blank(const char *s) {
+ bool line_is_blank(const char *s){
  	// Line is blank if it only contained white-space chars.
  	return first_non_white_space(s) < 0;
  }
@@ -261,6 +260,7 @@ int main(void){
 
 		if(strcmp(origin, quit) == 0){
 			fprintf(stderr, "%s\n", "Normal exit.");
+			running = false;
 			graph_kill(g);
 			return 0;
 		}
