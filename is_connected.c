@@ -276,7 +276,7 @@ int main(void){
 	int entry1;
 	int entry2;
 	int entries;
-	g = read_file(g,"2-repeated-questions.map");
+	g = read_file(g,"airmap1.map");
 
 
 	while(running){
