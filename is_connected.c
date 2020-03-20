@@ -281,7 +281,7 @@ int main(void){
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
-		scanf("%40s", str);
+		//scanf("%40s", str);
 		fgets(str, BUFSIZE, stdin);
 		words = sscanf(str, "%s %s %s", origin, destination, temp);
 
