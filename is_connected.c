@@ -272,7 +272,7 @@ int main(void){
 	int entry1;
 	int entry2;
 	int entries;
-
+	fprintf(stderr, "%s\n", "PLZZZ");
 	g = read_file(g,"airmap1.map");
 	fprintf(stderr, "%s\n", " Tog oss igenom read_file");
 
