@@ -226,25 +226,25 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		}*/
 		//fprintf(stderr, "%s\n", "About to print");
 		//fprintf(stderr, "%s %s\n", src, dest);
-		if(graph_find_node(g, src) == NULL){
-			g = graph_insert_node(g, src);
-		}
-
 
 		temp_list = graph_neighbours(g, graph_find_node(g, src));
 		pos = dlist_first(temp_list);
 		while(!dlist_is_end(temp_list, pos)){
-			if(strcmp(dlist_inspect(temp_list, pos), dest)){
+			if(strcmp(dlist_inspect(temp_list, pos), dest) == 0){
 				fprintf(stderr, "%s\n", "Error: File can't contain more than one of the same edge");
 				exit(EXIT_FAILURE);
 			}
 			pos = dlist_next(temp_list, pos);
 		}
 
+		if(graph_find_node(g, src) == NULL){
+			g = graph_insert_node(g, src);
+		}
+
 		if(graph_find_node(g, dest) == NULL){
 			g = graph_insert_node(g, dest);
 		}
-		
+
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
 
 		//puts(line);
