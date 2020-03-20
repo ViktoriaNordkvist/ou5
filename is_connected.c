@@ -282,7 +282,7 @@ int main(void){
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 		scanf("%40s", str);
-		fgets(str, BUFSIZE, NULL);
+		fgets(str, BUFSIZE, str);
 		words = sscanf(str, "%s %s %s", origin, destination, temp);
 
 		if(words < 2){
