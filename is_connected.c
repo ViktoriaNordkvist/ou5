@@ -258,13 +258,13 @@ int main(void){
 
 		//entries = scanf("%40s %40s", origin, destination);
 
-		entry1 = scanf("%40s ", origin);
+		entry1 = scanf("%40s", origin);
 
 		if(strcmp(origin, quit) == 0){
 			fprintf(stderr, "%s\n", "Normal exit.");
 			break;
 		}
-		
+
 		entry2 = scanf("%40s", destination);
 
 		entries = entry1 + entry2;
