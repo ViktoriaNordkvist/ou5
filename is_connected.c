@@ -253,7 +253,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
-		fprintf(stderr, "%s\n", "Har lagt till noderna ifall de ej fanns samma med bågen");
+		//fprintf(stderr, "%s\n", "Har lagt till noderna ifall de ej fanns samma med bågen");
 		//puts(line);
 		first_non_comment = false;
 	}
