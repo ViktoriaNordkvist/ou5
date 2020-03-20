@@ -232,6 +232,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		while(!dlist_is_end(temp_list, pos)){
 			if(strcmp(dlist_inspect(temp_list, pos), dest) == 0){
 				fprintf(stderr, "%s\n", "Error: File can't contain more than one of the same edge");
+				graph_kill(g);
 				exit(EXIT_FAILURE);
 			}
 			pos = dlist_next(temp_list, pos);
