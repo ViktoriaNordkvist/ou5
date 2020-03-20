@@ -281,10 +281,12 @@ int main(void){
 		}
 		if(node1 == NULL){
 			fprintf(stderr, "%s\n", "Origin does not exist");
+			fprintf(stderr, "%s", "\n" );
 			continue;
 		}
 		if(node2 == NULL){
 			fprintf(stderr, "%s\n", "Destination does not exist");
+			fprintf(stderr, "%s", "\n" );
 			continue;
 		}
 
