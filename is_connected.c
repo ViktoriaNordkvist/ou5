@@ -293,14 +293,14 @@ int main(void){
 				return 0;
 			}
 			else{
-				fprintf(stderr, "%s\n", "To few arguments, try again.");
+				fprintf(stderr, "%s\n", "Too few arguments, try again.");
 				fprintf(stderr, "%s", "\n" );
 				continue;
 			}
 
 		}
 		else if(words > 2){
-			fprintf(stderr, "%s\n", "To many arguments" );
+			fprintf(stderr, "%s\n", "Too many arguments, try again." );
 			fprintf(stderr, "%s", "\n" );
 			continue;
 		}
