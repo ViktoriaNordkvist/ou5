@@ -89,8 +89,6 @@
 * Returns: True if graph has any edges, otherwise false.
 */
 bool find_path(graph *g,node *src,node *dest){
-	//fprintf(stderr, "%s\n","Hewwo!" );
-
 	//Variable Declarations
 	node *node_temp;
 	dlist_pos pos;
@@ -99,21 +97,17 @@ bool find_path(graph *g,node *src,node *dest){
 
 	//If both inputed nodes are the same, return true.
 	if(nodes_are_equal(src, dest)){
-		//fprintf(stderr, "%s\n","Tjo bre mannen asså walla orkar inte mann." );
 		return true;
 	}
 
 	//Remove the start node, go through the children lists and create a queue.
-	// ta bort start noden. gå igenom barnens listor. bygg kö.
 	else{
-		//fprintf(stderr, "%s\n","ELSE" );
 		queue *q = queue_empty(NULL);
 		q = queue_enqueue(q, src);
 		pos = dlist_first(list_temp);
 
 		//Queues the origin nodes neighbouring nodes until we reach the end of the list.
 		while(!dlist_is_end(list_temp, pos)){
-			//fprintf(stderr, "%s\n","WHILE 1" );
 			temp_name = dlist_inspect(list_temp, pos);
 			node_temp = graph_find_node(g, temp_name);
 			queue_enqueue(q, node_temp);
@@ -126,14 +120,12 @@ bool find_path(graph *g,node *src,node *dest){
 
 		//Loops through the queue and adds each nodes neighbours to the queue if not seen.
 		while (!queue_is_empty(q)) {
-			//fprintf(stderr, "%s\n","WHILE 2" );
 			node_temp = queue_front(q);
 			list_temp = graph_neighbours(g, node_temp);
 			pos = dlist_first(list_temp);
 
 			//Check if the current node is the destination node.
 			if(nodes_are_equal(node_temp, dest)){
-				//fprintf(stderr, "%s\n","Tjo bre mannen asså walla orkar inte mann." );
 				queue_kill(q);
 				return true;
 			}
@@ -156,7 +148,6 @@ bool find_path(graph *g,node *src,node *dest){
 		graph_reset_seen(g);
 		queue_kill(q);
 	}
-	//fprintf(stderr, "%s\n","Nein das ist nicht gut." );
 	return false;
 }
 
@@ -172,7 +163,6 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 	const int BUFSIZE = 41;
 	int maxnodes = 0;
-	//maxnodes = maxnodes; // Något är tokigt, maxnodes används men utan detta kompilerar det inte.
 	char line[BUFSIZE];
 	char src[BUFSIZE];
 	char dest[BUFSIZE];
@@ -194,16 +184,13 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 		//Skip current line if it is a comment or blank
 		if(line_is_comment(line) || line_is_blank(line)){
-			//fprintf(stderr, "%s\n", "inne i if(line_is_comment...)");
 			continue;
 		}
 
 		//Check if the first the first non-comment line to see if it is an integer.
 		if(first_non_comment){
-			//fprintf(stderr, "%s\n", "inne i if(first_non_comment)");
 			if (line_is_digit(line)){
 				maxnodes = atoi(line);
-				//fprintf(stderr, "%s\n", "Här allokeras minne :)!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				g = graph_empty(maxnodes*2);
 				first_non_comment = false;
 				continue;
@@ -213,20 +200,11 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 				exit(EXIT_FAILURE);
 			}
 		}
-		//fprintf(stderr, "%s\n", "Time to scan" );
 		//Scan the first two words(nodes) on the line and save them in src and dest accordingly.
 		if(sscanf(line, "%s %s ", src, dest) != 2) {
 			fprintf(stderr, "%s\n", "Error: The file does not have the right format\n");
 			exit(EXIT_FAILURE);
 		}
-
-		//Exit with error if the inserted nodes are the same.
-		/*if(strcmp(src, dest) == 0){
-			fprintf(stderr, "%s\n", "Error: The file does not have the right format\n");
-			exit(EXIT_FAILURE);
-		}*/
-		//fprintf(stderr, "%s\n", "About to print");
-		//fprintf(stderr, "%s %s\n", src, dest);
 
 		if(graph_find_node(g, src) == NULL){
 			g = graph_insert_node(g, src);
@@ -236,28 +214,22 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 			g = graph_insert_node(g, dest);
 		}
 
-		//fprintf(stderr, "%s\n", "Ska nu fixa temp_list + pos");
 		temp_list = graph_neighbours(g, graph_find_node(g, src));
 
 		pos = dlist_first(temp_list);
-		//fprintf(stderr, "%s\n", "hämtat neighbours för att kolla att bågen ej redan finns");
 		while(!dlist_is_end(temp_list, pos)){
-			//fprintf(stderr, "%s\n", "Inne i while");
 			if(strcmp(dlist_inspect(temp_list, pos), dest) == 0){
 				fprintf(stderr, "%s\n", "Error: File can't contain more than one of the same edge");
-				//graph_kill(g);
+
 				exit(EXIT_FAILURE);
 			}
 			pos = dlist_next(temp_list, pos);
 		}
 
-
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
-		//fprintf(stderr, "%s\n", "Har lagt till noderna ifall de ej fanns samma med bågen");
-		//puts(line);
 		first_non_comment = false;
 	}
-	//fprintf(stderr, "%s\n", "Done");
+
 	fclose(in);
 	return g;
 }
@@ -269,19 +241,17 @@ int main(int argc, const char **argv){
 	char destination[BUFSIZE];
 	char str[BUFSIZE];
 	char temp[BUFSIZE];
-	bool running = true;
 	char quit[5] = "quit";
 	node *node1;
 	node *node2;
 	bool path_found;
-	graph *g = NULL;
+	bool running = true;
 	int words;
+	graph *g = NULL;
 	g = read_file(g, argv[1]);
-
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
-		//scanf("%40s", str);
 		fgets(str, BUFSIZE, stdin);
 		words = sscanf(str, "%s %s %s", origin, destination, temp);
 
@@ -306,7 +276,6 @@ int main(int argc, const char **argv){
 		else{
 			node1 = graph_find_node(g,origin);
 			node2 = graph_find_node(g,destination);
-
 
 			if(node1 == NULL && node2 == NULL){
 				fprintf(stderr, "%s\n", "None of the nodes exists");
@@ -336,12 +305,8 @@ int main(int argc, const char **argv){
 
 			}
 		}
-
-
-
-
 	}
 
 	graph_kill(g);
 	return 0;
-	}
+}
