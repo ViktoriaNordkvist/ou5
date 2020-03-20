@@ -250,26 +250,24 @@ int main(void){
 	int entry1;
 	int entry2;
 	int entries;
+
 	g = read_file(g,"airmap1.map");
 
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 
-		//entries = scanf("%40s %40s", origin, destination);
-
 		entry1 = scanf("%40s", origin);
 
 		if(strcmp(origin, quit) == 0){
 			fprintf(stderr, "%s\n", "Normal exit.");
-			break;
+			graph_kill(g);
+			return 0;
 		}
 
 		entry2 = scanf("%40s", destination);
 
 		entries = entry1 + entry2;
-
-
 
 		if(entries < 2){
 			fprintf(stderr, "%s\n", "To few arguments." );

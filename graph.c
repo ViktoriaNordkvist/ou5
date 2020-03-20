@@ -81,9 +81,6 @@ bool graph_has_edges(const graph *g){
 
 	//If the array is empty then we return true
 	return !array_1d_has_value(g->entries, array_1d_low(g->entries));
-
-	//vi tror att om det inte finns något i arrayen har vi inga resemål och
-	// inga bågar
 }
 
 /**
@@ -159,8 +156,7 @@ bool graph_node_is_seen(const graph *g, const node *n){
 		}
 		pos++;
 	}
-	//behövs en returnsats här, det verkar som att funktionen utgår från att
-	// noden finns i grafen??
+
 	return false;
 }
 
@@ -184,7 +180,6 @@ graph *graph_node_set_seen(graph *g, node *n, bool seen) {
 		}
 		pos++;
 	}
-
 
 	return g;
 }
@@ -247,9 +242,6 @@ graph *graph_insert_edge(graph *g, node *n1, node *n2){
 }
 
 
-
-// insert i listan, alltså grannar
-
 /**
 * graph_choose_node() - Return an arbitrary node from the graph.
 * @g: Graph to inspect.
@@ -289,7 +281,7 @@ dlist *graph_neighbours(const graph *g,const node *n){
 	return NULL;
 }
 
-//return node(namnet på noden egentligen)->neighbours
+
 /**
 * graph_kill() - Destroy a given graph.
 * @g: Graph to destroy.
@@ -311,28 +303,3 @@ void graph_kill(graph *g){
 	array_1d_kill(g->entries);
 	free(g);
 }
-
-//iterera över alla noder i tabellen och deallokera antingen hela listan på en
-//gång  men tänker mig att vi måste avallokera varje listelement för sig. sedan
-// avallokera minnet för noden i sig och sedan free grafen.
-
-/**
-* graph_print() - Iterate over the graph elements and print their values.
-* @g: Graph to inspect.
-*
-* Iterates over the graph and prints its contents.
-*
-* Returns: Nothing.
-*/
-
-/*
-void graph_print(const graph *g){ //KAN TA BORT DENNA SEN VID INLÄMNING!!
-	int pos = array_1d_low(g->entries);
-	node *current_node = NULL;
-	while(array_1d_has_value(g->entries, pos)){
-		current_node = array_1d_inspect_value(g->entries, pos);
-		printf("%s: ", current_node->name);
-		dlist_print(current_node->neighbours, printf); // vad borde det stå istället för fprint????
-		pos++;
-	}
-}*/
