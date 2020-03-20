@@ -267,74 +267,78 @@ int main(void){
 	const int BUFSIZE = 41;
 	char origin[BUFSIZE];
 	char destination[BUFSIZE];
+	char str[BUFSIZE];
+	char temp[BUFSIZE];
 	bool running = true;
 	char quit[5] = "quit";
 	node *node1;
 	node *node2;
 	bool path_found;
 	graph *g = NULL;
-	int entry1;
-	int entry2;
-	int entries;
-	g = read_file(g,"airmap1.map");
+	int words;
+	g = read_file(g,"x-bad-map-format.map");
 
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
+		scanf("%40s", str)
+		fgets(str, BUFSIZE);
+		words = sscanf(line, "%s %s %s", origin, destination, temp);
 
-		entry1 = scanf("%40s", origin);
+		if(words < 2){
+			if(strcmp(origin, quit) == 0){
+				fprintf(stderr, "%s\n", "Normal exit.");
+				running = false;
+				graph_kill(g);
+				return 0;
+			}
+			else{
+				fprintf(stderr, "%s\n", "To few arguments, try again.");
+				fprintf(stderr, "%s", "\n" );
+				continue;
+			}
 
-		if(strcmp(origin, quit) == 0){
-			fprintf(stderr, "%s\n", "Normal exit.");
-			running = false;
-			graph_kill(g);
-			return 0;
 		}
-
-		entry2 = scanf("%40s", destination);
-
-		entries = entry1 + entry2;
-
-		if(entries < 2){
-			fprintf(stderr, "%s\n", "To few arguments." );
+		else if(words > 2){
+			fprintf(stderr, "%s\n", "To many arguments" );
 			continue;
 		}
-		if(entries > 2){
-			fprintf(stderr, "%s\n", "To many arguments." );
-			continue;
-		}
-
-		node1 = graph_find_node(g,origin);
-		node2 = graph_find_node(g,destination);
+		else{
+			node1 = graph_find_node(g,origin);
+			node2 = graph_find_node(g,destination);
 
 
-		if(node1 == NULL && node2 == NULL){
-			fprintf(stderr, "%s\n", "None of the nodes exists");
-			fprintf(stderr, "%s", "\n" );
-			continue;
-		}
-		if(node1 == NULL){
-			fprintf(stderr, "%s\n", "Origin does not exist");
-			fprintf(stderr, "%s", "\n" );
-			continue;
-		}
-		if(node2 == NULL){
-			fprintf(stderr, "%s\n", "Destination does not exist");
-			fprintf(stderr, "%s", "\n" );
-			continue;
+			if(node1 == NULL && node2 == NULL){
+				fprintf(stderr, "%s\n", "None of the nodes exists");
+				fprintf(stderr, "%s", "\n" );
+				continue;
+			}
+			if(node1 == NULL){
+				fprintf(stderr, "%s\n", "Origin does not exist");
+				fprintf(stderr, "%s", "\n" );
+				continue;
+			}
+			if(node2 == NULL){
+				fprintf(stderr, "%s\n", "Destination does not exist");
+				fprintf(stderr, "%s", "\n" );
+				continue;
+			}
+
+			path_found = find_path(g, node1, node2);
+
+			if(path_found){
+				fprintf(stderr, "There is a path from %s to %s.\n", origin, destination);
+				fprintf(stderr, "%s", "\n");
+			}
+			else {
+				fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
+				fprintf(stderr, "%s", "\n" );
+
+			}
 		}
 
-		path_found = find_path(g, node1, node2);
 
-		if(path_found){
-			fprintf(stderr, "There is a path from %s to %s.\n", origin, destination);
-			fprintf(stderr, "%s", "\n");
-		}
-		else {
-			fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
-			fprintf(stderr, "%s", "\n" );
 
-		}
 
 	}
 
