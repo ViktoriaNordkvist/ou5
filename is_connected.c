@@ -267,7 +267,7 @@ int main(void){
 		}
 
 
-		if(strcmp(origin, quit) == 0){
+		if(strcmp(origin, quit) == 0 || strcmp(destination, quit) == 0){
 			fprintf(stderr, "%s\n", "Normal exit.");
 			break;
 		}
