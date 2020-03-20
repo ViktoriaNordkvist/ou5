@@ -228,8 +228,18 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		}*/
 		//fprintf(stderr, "%s\n", "About to print");
 		//fprintf(stderr, "%s %s\n", src, dest);
+
+		if(graph_find_node(g, src) == NULL){
+			g = graph_insert_node(g, src);
+		}
+
+		if(graph_find_node(g, dest) == NULL){
+			g = graph_insert_node(g, dest);
+		}
+		
 		fprintf(stderr, "%s\n", "Ska nu fixa temp_list + pos");
 		temp_list = graph_neighbours(g, graph_find_node(g, src));
+
 		pos = dlist_first(temp_list);
 		fprintf(stderr, "%s\n", "hämtat neighbours för att kolla att bågen ej redan finns");
 		while(!dlist_is_end(temp_list, pos)){
@@ -242,13 +252,6 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 			pos = dlist_next(temp_list, pos);
 		}
 
-		if(graph_find_node(g, src) == NULL){
-			g = graph_insert_node(g, src);
-		}
-
-		if(graph_find_node(g, dest) == NULL){
-			g = graph_insert_node(g, dest);
-		}
 
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
 		fprintf(stderr, "%s\n", "Har lagt till noderna ifall de ej fanns samma med bågen");
