@@ -246,11 +246,11 @@ int main(void){
 	node *node1;
 	node *node2;
 	bool path_found;
-	graph *g;
+	graph *g = NULL;
 	int entry1;
 	int entry2;
 	int entries;
-	g = read_file(g,"x-bad-map-format.map");
+	g = read_file(g,"airmap1.map");
 
 
 	while(running){
