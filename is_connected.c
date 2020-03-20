@@ -276,7 +276,7 @@ int main(void){
 	bool path_found;
 	graph *g = NULL;
 	int words;
-	g = read_file(g,"x-bad-map-format.map");
+	g = read_file(g,"airmap1.map");
 
 
 	while(running){
