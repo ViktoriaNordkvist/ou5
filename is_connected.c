@@ -281,11 +281,11 @@ int main(void){
 
 		if(path_found){
 			fprintf(stderr, "There is a path from %s to %s.\n", origin, destination);
-			fprintf(stderr, "\n", );
+			fprintf(stderr, "%s", "\n");
 		}
 		else {
 			fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
-			fprintf(stderr, "\n", );
+			fprintf(stderr, "%s", "\n" );
 
 		}
 
