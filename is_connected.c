@@ -253,7 +253,15 @@ int main(void){
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
-		scanf("%40s %40s", origin, destination);
+
+		if(scanf("%40s %40s", origin, destination) < 2){
+			fprintf(stderr, "%s\n", "To few arguments." );
+			continue;
+		}
+		if(scanf("%40s %40s", origin, destination) > 2){
+			fprintf(stderr, "%s\n", "To many arguments." );
+			continue;
+		}
 
 
 		if(strcmp(origin, quit) == 0){
