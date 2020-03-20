@@ -247,15 +247,26 @@ int main(void){
 	node *node2;
 	bool path_found;
 	graph *g;
+	int entry1;
+	int entry2;
 	int entries;
-
 	g = read_file(g,"airmap1.map");
 
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 
-		entries = scanf("%40s %40s", origin, destination);
+		//entries = scanf("%40s %40s", origin, destination);
+
+		entry1 = scanf("%40s ", origin);
+		entry2 = scanf("%40s", destination);
+
+		entries = entry1 + entry2;
+
+		if(strcmp(origin, quit) == 0){
+			fprintf(stderr, "%s\n", "Normal exit.");
+			break;
+		}
 
 		if(entries < 2){
 			fprintf(stderr, "%s\n", "To few arguments." );
@@ -266,14 +277,9 @@ int main(void){
 			continue;
 		}
 
-
-		if(strcmp(origin, quit) == 0 || strcmp(destination, quit) == 0){
-			fprintf(stderr, "%s\n", "Normal exit.");
-			break;
-		}
-
 		node1 = graph_find_node(g,origin);
 		node2 = graph_find_node(g,destination);
+
 
 		if(node1 == NULL && node2 == NULL){
 			fprintf(stderr, "%s\n", "None of the nodes exists");
