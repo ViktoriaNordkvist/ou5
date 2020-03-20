@@ -232,7 +232,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 			g = graph_insert_node(g, dest);
 		}
 
-		temp_list = graph_neighbours(g, graph_find_node(g, scr));
+		temp_list = graph_neighbours(g, graph_find_node(g, src));
 		pos = dlist_first(temp_list);
 		while(!dlist_is_end(temp_list, pos)){
 			if(strcmp(dlist_inspect(temp_list, pos), dest)){
