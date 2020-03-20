@@ -220,9 +220,10 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		}
 
 		//Exit with error if the inserted nodes are the same.
-		if(strcmp(src, dest) == 0){
+		/*if(strcmp(src, dest) == 0){
+			fprintf(stderr, "%s\n", "Error: The file does not have the right format\n");
 			exit(EXIT_FAILURE);
-		}
+		}*/
 		//fprintf(stderr, "%s\n", "About to print");
 		//fprintf(stderr, "%s %s\n", src, dest);
 		if(graph_find_node(g, src) == NULL){
