@@ -250,7 +250,7 @@ int main(void){
 	int entry1;
 	int entry2;
 	int entries;
-	g = read_file(g,"airmap1.map");
+	g = read_file(g,"x-bad-map-format.map");
 
 
 	while(running){
