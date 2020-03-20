@@ -276,7 +276,7 @@ int main(void){
 	int entry1;
 	int entry2;
 	int entries;
-	g = read_file(g,"airmap1.map");
+	g = read_file(g,"3-directed-graph.map");
 
 
 	while(running){
