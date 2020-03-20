@@ -247,6 +247,7 @@ int main(void){
 	node *node2;
 	bool path_found;
 	graph *g;
+	int entries;
 
 	g = read_file(g,"airmap1.map");
 
@@ -254,51 +255,50 @@ int main(void){
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 
-		if(scanf("%40s %40s", origin, destination) < 2){
+		entries = scanf("%40s %40s", origin, destination);
+
+		if(entries < 2){
 			fprintf(stderr, "%s\n", "To few arguments." );
 			continue;
 		}
-		else if(scanf("%40s %40s", origin, destination) > 2){
+		if(entries > 2){
 			fprintf(stderr, "%s\n", "To many arguments." );
 			continue;
 		}
-		else {
-			
-			if(strcmp(origin, quit) == 0){
-				fprintf(stderr, "%s\n", "Normal exit.");
-				break;
-			}
 
-			node1 = graph_find_node(g,origin);
-			node2 = graph_find_node(g,destination);
 
-			if(node1 == NULL && node2 == NULL){
-				fprintf(stderr, "%s\n", "None of the nodes exists");
-				continue;
-			}
-			if(node1 == NULL){
-				fprintf(stderr, "%s\n", "Origin does not exist");
-				continue;
-			}
-			if(node2 == NULL){
-				fprintf(stderr, "%s\n", "Destination does not exist");
-				continue;
-			}
-
-			path_found = find_path(g, node1, node2);
-
-			if(path_found){
-				fprintf(stderr, "There is a path from %s to %s.\n", origin, destination);
-				fprintf(stderr, "%s", "\n");
-			}
-			else {
-				fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
-				fprintf(stderr, "%s", "\n" );
-
-			}
+		if(strcmp(origin, quit) == 0){
+			fprintf(stderr, "%s\n", "Normal exit.");
+			break;
 		}
 
+		node1 = graph_find_node(g,origin);
+		node2 = graph_find_node(g,destination);
 
+		if(node1 == NULL && node2 == NULL){
+			fprintf(stderr, "%s\n", "None of the nodes exists");
+			continue;
+		}
+		if(node1 == NULL){
+			fprintf(stderr, "%s\n", "Origin does not exist");
+			continue;
+		}
+		if(node2 == NULL){
+			fprintf(stderr, "%s\n", "Destination does not exist");
+			continue;
+		}
+
+		path_found = find_path(g, node1, node2);
+
+		if(path_found){
+			fprintf(stderr, "There is a path from %s to %s.\n", origin, destination);
+			fprintf(stderr, "%s", "\n");
+		}
+		else {
+			fprintf(stderr, "There is no path from %s to %s.\n", origin, destination);
+			fprintf(stderr, "%s", "\n" );
+
+		}
 
 	}
 
