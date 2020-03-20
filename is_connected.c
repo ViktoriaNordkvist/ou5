@@ -289,8 +289,7 @@ int main(void){
 			if(strcmp(origin, quit) == 0){
 				fprintf(stderr, "%s\n", "Normal exit.");
 				running = false;
-				graph_kill(g);
-				return 0;
+				break;
 			}
 			else{
 				fprintf(stderr, "%s\n", "Too few arguments, try again.");
