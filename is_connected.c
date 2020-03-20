@@ -180,7 +180,9 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 	in = fopen(name, "r");
 	bool first_non_comment = true;
 	dlist *temp_list;
+	fprintf(stderr, "%s\n", "Ska nu fixa dlist_pos");
 	dlist_pos pos;
+	fprintf(stderr, "%s\n", "Nu har vi fixat dlist_pos");
 
 	//Check if the file can be found.
 	if(in == NULL){
@@ -226,7 +228,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		}*/
 		//fprintf(stderr, "%s\n", "About to print");
 		//fprintf(stderr, "%s %s\n", src, dest);
-
+		fprintf(stderr, "%s\n", "Ska nu fixa temp_list + pos");
 		temp_list = graph_neighbours(g, graph_find_node(g, src));
 		pos = dlist_first(temp_list);
 		fprintf(stderr, "%s\n", "hämtat neighbours för att kolla att bågen ej redan finns");
