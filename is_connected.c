@@ -301,6 +301,7 @@ int main(void){
 		}
 		else if(words > 2){
 			fprintf(stderr, "%s\n", "To many arguments" );
+			fprintf(stderr, "%s", "\n" );
 			continue;
 		}
 		else{
