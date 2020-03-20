@@ -180,9 +180,8 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 	in = fopen(name, "r");
 	bool first_non_comment = true;
 	dlist *temp_list;
-	fprintf(stderr, "%s\n", "Ska nu fixa dlist_pos");
 	dlist_pos pos;
-	fprintf(stderr, "%s\n", "Nu har vi fixat dlist_pos");
+
 
 	//Check if the file can be found.
 	if(in == NULL){
@@ -236,14 +235,14 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		if(graph_find_node(g, dest) == NULL){
 			g = graph_insert_node(g, dest);
 		}
-		
-		fprintf(stderr, "%s\n", "Ska nu fixa temp_list + pos");
+
+		//fprintf(stderr, "%s\n", "Ska nu fixa temp_list + pos");
 		temp_list = graph_neighbours(g, graph_find_node(g, src));
 
 		pos = dlist_first(temp_list);
-		fprintf(stderr, "%s\n", "hämtat neighbours för att kolla att bågen ej redan finns");
+		//fprintf(stderr, "%s\n", "hämtat neighbours för att kolla att bågen ej redan finns");
 		while(!dlist_is_end(temp_list, pos)){
-			fprintf(stderr, "%s\n", "Inne i while");
+			//fprintf(stderr, "%s\n", "Inne i while");
 			if(strcmp(dlist_inspect(temp_list, pos), dest) == 0){
 				fprintf(stderr, "%s\n", "Error: File can't contain more than one of the same edge");
 				//graph_kill(g);
@@ -277,9 +276,8 @@ int main(void){
 	int entry1;
 	int entry2;
 	int entries;
-	fprintf(stderr, "%s\n", "PLZZZ");
 	g = read_file(g,"airmap1.map");
-	fprintf(stderr, "%s\n", " Tog oss igenom read_file");
+
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
