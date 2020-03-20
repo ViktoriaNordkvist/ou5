@@ -93,7 +93,7 @@ bool find_path(graph *g,node *src,node *dest){
 
 	//Variable Declarations
 	node *node_temp;
-	dlist_pos pos = 0;
+	dlist_pos pos;
 	char *temp_name = NULL;
 	dlist *list_temp = graph_neighbours(g, src);
 
@@ -276,7 +276,7 @@ int main(void){
 	int entry1;
 	int entry2;
 	int entries;
-	g = read_file(g,"2-repeated-questions.map");
+	g = read_file(g,"airmap1.map");
 
 
 	while(running){
