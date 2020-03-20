@@ -179,6 +179,8 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 	FILE *in; // Pointer to input file
 	in = fopen(name, "r");
 	bool first_non_comment = true;
+	dlist *temp_list;
+	dlist_pos *pos;
 
 	//Check if the file can be found.
 	if(in == NULL){
@@ -229,7 +231,16 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		if(graph_find_node(g, dest) == NULL){
 			g = graph_insert_node(g, dest);
 		}
-		
+
+		temp_list = graph_neighbours(g, graph_find_node(g, scr));
+		pos = dlist_first(temp_list);
+		while(!dlist_is_end(temp_list)){
+			if(strcmp(dlist_inspect(temp_list, pos), dest)){
+				fprintf(stderr, "%s\n", "Error: File can't contain more than one of the same edge");
+				exit(EXIT_FAILURE);
+			}
+			pos = dlist_next(temp_list);
+		}
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
 
 		//puts(line);
