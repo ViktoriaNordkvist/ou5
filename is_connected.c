@@ -229,9 +229,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		if(graph_find_node(g, src) == NULL){
 			g = graph_insert_node(g, src);
 		}
-		if(graph_find_node(g, dest) == NULL){
-			g = graph_insert_node(g, dest);
-		}
+
 
 		temp_list = graph_neighbours(g, graph_find_node(g, src));
 		pos = dlist_first(temp_list);
@@ -242,6 +240,11 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 			}
 			pos = dlist_next(temp_list, pos);
 		}
+
+		if(graph_find_node(g, dest) == NULL){
+			g = graph_insert_node(g, dest);
+		}
+		
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
 
 		//puts(line);
