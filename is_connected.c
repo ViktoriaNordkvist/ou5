@@ -229,10 +229,12 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 
 		temp_list = graph_neighbours(g, graph_find_node(g, src));
 		pos = dlist_first(temp_list);
+		fprintf(stderr, "%s\n", "hämtat neighbours för att kolla att bågen ej redan finns");
 		while(!dlist_is_end(temp_list, pos)){
+			fprintf(stderr, "%s\n", "Inne i while");
 			if(strcmp(dlist_inspect(temp_list, pos), dest) == 0){
 				fprintf(stderr, "%s\n", "Error: File can't contain more than one of the same edge");
-				graph_kill(g);
+				//graph_kill(g);
 				exit(EXIT_FAILURE);
 			}
 			pos = dlist_next(temp_list, pos);
@@ -247,7 +249,7 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		}
 
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
-
+		fprintf(stderr, "%s\n", "Har lagt till noderna ifall de ej fanns samma med bågen");
 		//puts(line);
 		first_non_comment = false;
 	}
@@ -272,7 +274,7 @@ int main(void){
 	int entries;
 
 	g = read_file(g,"airmap1.map");
-
+	fprintf(stderr, "%s\n", " Tog oss igenom read_file");
 
 	while(running){
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
