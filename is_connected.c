@@ -153,7 +153,7 @@ bool find_path(graph *g,node *src,node *dest){
 			}
 			queue_dequeue(q);
 		}
-
+		graph_reset_seen(g);
 		queue_kill(q);
 	}
 	//fprintf(stderr, "%s\n","Nein das ist nicht gut." );
