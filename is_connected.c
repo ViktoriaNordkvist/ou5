@@ -223,8 +223,13 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 		}
 		//fprintf(stderr, "%s\n", "About to print");
 		//fprintf(stderr, "%s %s\n", src, dest);
-		g = graph_insert_node(g, src);
-		g = graph_insert_node(g, dest);
+		if(graph_find_node(g, src) == NULL){
+			g = graph_insert_node(g, src);
+		}
+		if(graph_find_node(g, dest) == NULL){
+			g = graph_insert_node(g, dest);
+		}
+		
 		g = graph_insert_edge(g, graph_find_node(g, src), graph_find_node(g, dest));
 
 		//puts(line);
