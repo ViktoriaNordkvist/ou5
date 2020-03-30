@@ -10,7 +10,6 @@
 #include "queue.h"
 #include "list.h"
 
-// ====================== PROGRAM INFORMATION ==========================
 /*
  * Name: is_connected.c
  *
@@ -19,21 +18,15 @@
  * based on information through an inserted file.
  *
  * Authors: Viktoria Nordkvist (id19vnt@cs.umu.se)
- *			Tobias Bergström (id19tbm@cs.umu.se)
+ *	    	Tobias Bergström (id19tbm@cs.umu.se)
  *
  * Version information:
  *   2018-03-18: v1.0, first public version.
  */
 
-// ====================== PROGRAM FUNCTIONS ==========================
 
-/**
-* first_non_white_space() - Check the first non white space.
-* @s: Stream to check.
-*
-* Returns: Position of first non-whitespace character or -1 if only
-* 20 white-space is found.
-*/
+ /* Return position of first non-whitespace character or -1 if only
+ 20 white-space is found. */
  int first_non_white_space(const char *s){
  	int i = 0; // Start at first char.
  	// Advance until we hit EOL as long as we're loooking at white-space.
@@ -47,14 +40,8 @@
  	}
  }
 
-/**
-* last_non_white_space() - Check the last non white space.
-* @s: Stream to check.
-*
-* Returns: Position of last non-whitespace character or -1 if only
-* white-space is found.
-*/
-
+ /* Return position of last non-whitespace character or -1 if only
+ white-space is found. */
  int last_non_white_space(const char *s){
  	// Start at last char.
  	int i = strlen(s) - 1;
@@ -70,35 +57,19 @@
  	}
  }
 
-/**
-* line_is_blank() - Check if the line is blank
-* @s: String to check.
-*
-* Returns: True if s only contains whitespace
-*/
- bool line_is_blank(const char *s){
+ /* Return true if s only contains whitespace */
+ bool line_is_blank(const cnhar *s){
  	// Line is blank if it only contained white-space chars.
  	return first_non_white_space(s) < 0;
  }
 
-/**
-* line_is_comment() - Check if the line is a comment
-* @s: String to check.
-*
-* Returns: True if s is a comment line, i.e. first non-whitespc char is '#'
-*/
+ /* Return true if s is a comment line, i.e. first non-whitespc char is '#' */
  bool line_is_comment(const char *s){
  	int i = first_non_white_space(s);
  	return (i >= 0 && s[i] == '#');
  }
 
-
-/**
-* line_is_digit() - Check if the current line is a digit.
-* @s: String to check.
-*
-* Returns: True if the current line is an integer, false if not.
-*/
+ //Returns true if the current line is an integer, false if not.
  bool line_is_digit(const char *s){
 
  	int temp = 0;
@@ -119,8 +90,8 @@
 */
 bool find_path(graph *g,node *src,node *dest){
 	//Variable Declarations
-	node *node_temp = NULL;
-	dlist_pos pos = NULL;
+	node *node_temp;
+	dlist_pos pos;
 	char *temp_name = NULL;
 	dlist *list_temp = graph_neighbours(g, src);
 
@@ -137,7 +108,6 @@ bool find_path(graph *g,node *src,node *dest){
 
 		//Queues the origin nodes neighbouring nodes until we reach the end of the list.
 		while(!dlist_is_end(list_temp, pos)){
-			//fprintf(stderr, "1\n" );
 			temp_name = dlist_inspect(list_temp, pos);
 			node_temp = graph_find_node(g, temp_name);
 			queue_enqueue(q, node_temp);
@@ -150,34 +120,29 @@ bool find_path(graph *g,node *src,node *dest){
 
 		//Loops through the queue and adds each nodes neighbours to the queue if not seen.
 		while (!queue_is_empty(q)) {
-			//fprintf(stderr, "2\n" );
 			node_temp = queue_front(q);
 			list_temp = graph_neighbours(g, node_temp);
 			pos = dlist_first(list_temp);
 
 			//Check if the current node is the destination node.
 			if(nodes_are_equal(node_temp, dest)){
-				graph_reset_seen(g);
 				queue_kill(q);
 				return true;
 			}
 
 			//Loops through the node list and adds unseen neighbours to the queue.
 			while(!dlist_is_end(list_temp, pos)){
-				//fprintf(stderr, "3\n" );
 
 				temp_name = dlist_inspect(list_temp, pos);
 				node_temp = graph_find_node(g, temp_name);
 
 				if(!graph_node_is_seen(g, node_temp)){
-					//fprintf(stderr, "Is Not Seen\n" );
-					graph_node_set_seen(g, node_temp, true);
 					queue_enqueue(q, node_temp);
 				}
 
 				pos = dlist_next(list_temp, pos);
+				graph_node_set_seen(g, node_temp, true);
 			}
-			graph_node_set_seen(g, node_temp, false);
 			queue_dequeue(q);
 		}
 		graph_reset_seen(g);
@@ -269,11 +234,8 @@ graph *read_file(graph *g, const char *name){ // const char name är namnet på 
 	return g;
 }
 
-// ====================== PROGRAM MAIN FUNCTION ==========================
-
+//Main function. duh.
 int main(int argc, const char **argv){
-
-	//Variable Declaration
 	const int BUFSIZE = 41;
 	char origin[BUFSIZE];
 	char destination[BUFSIZE];
@@ -286,21 +248,15 @@ int main(int argc, const char **argv){
 	bool running = true;
 	int words;
 	graph *g = NULL;
-
-	//Read the inserted file through the read_file function.
 	g = read_file(g, argv[1]);
 
-	//Loop that handles user input and repeats until the user decides to quit the program.
 	while(running){
-
 		fprintf(stderr, "%s", "Enter origin and destination (quit to exit): " );
 		fgets(str, BUFSIZE, stdin);
 		words = sscanf(str, "%s %s %s", origin, destination, temp);
 
-		//If the user inputs less than two arguments check if the input is: "quit", otherwise print error.
 		if(words < 2){
 			if(strcmp(origin, quit) == 0){
-				//Exit if input was "quit"
 				fprintf(stderr, "%s\n", "Normal exit.");
 				running = false;
 				break;
@@ -311,7 +267,6 @@ int main(int argc, const char **argv){
 				continue;
 			}
 
-		//Check if theres more than two arguments, print error if true.
 		}
 		else if(words > 2){
 			fprintf(stderr, "%s\n", "Too many arguments, try again." );
@@ -319,8 +274,6 @@ int main(int argc, const char **argv){
 			continue;
 		}
 		else{
-
-			//Find the nodes to see if they exist in the structure from the file that was read.
 			node1 = graph_find_node(g,origin);
 			node2 = graph_find_node(g,destination);
 
@@ -329,20 +282,17 @@ int main(int argc, const char **argv){
 				fprintf(stderr, "%s", "\n" );
 				continue;
 			}
-
 			if(node1 == NULL){
 				fprintf(stderr, "%s\n", "Origin does not exist");
 				fprintf(stderr, "%s", "\n" );
 				continue;
 			}
-
 			if(node2 == NULL){
 				fprintf(stderr, "%s\n", "Destination does not exist");
 				fprintf(stderr, "%s", "\n" );
 				continue;
 			}
 
-			//Check if there is a path between the input nodes.
 			path_found = find_path(g, node1, node2);
 
 			if(path_found){

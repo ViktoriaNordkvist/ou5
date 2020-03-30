@@ -1,0 +1,1 @@
+Det har Šndrats i teorin dŠr inparametrar till empty har lagts till. En underrubrik till metoder har lagts till fšr att beskriva den implementerade grŠnsytan. 

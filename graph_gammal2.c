@@ -7,6 +7,7 @@
 #include "dlist.h"
 #include "array_1d.h"
 
+
 /*
  * Name: graph.c
  *
@@ -14,7 +15,7 @@
  * a directed list.
  *
  * Authors: Viktoria Nordkvist (id19vnt@cs.umu.se)
- *            Tobias Bergström (id19tbm@cs.umu.se)
+ *			Tobias Bergström (id19tbm@cs.umu.se)
  *
  * Version information:
  *   2018-03-18: v1.0, first public version.
@@ -158,21 +159,18 @@ node *graph_find_node(const graph *g, const char *s){
 * Returns: The seen status for the node.
 */
 bool graph_node_is_seen(const graph *g, const node *n){
-return n->seen;
-/*
+
 	int pos = array_1d_low(g->entries);
 	node *current_node = NULL;
 	while(array_1d_has_value(g->entries, pos)){
 		current_node = array_1d_inspect_value(g->entries, pos);
-		if(strcmp(current_node->name, n->name) == 0){
+		if(current_node->name == n->name){
 			return current_node->seen;
 		}
 		pos++;
 	}
 
 	return false;
-
-	*/
 }
 
 /**
@@ -185,15 +183,11 @@ return n->seen;
 */
 graph *graph_node_set_seen(graph *g, node *n, bool seen) {
 
-n->seen = seen;
-
-return g;
-/*
 	int pos = array_1d_low(g->entries);
 	node *current_node = NULL;
 	while(array_1d_has_value(g->entries, pos)){
 		current_node = array_1d_inspect_value(g->entries, pos);
-		if(strcmp(current_node->name, n->name) == 0){
+		if(current_node->name == n->name){
 			current_node->seen = seen;
 			return g;
 		}
@@ -201,7 +195,6 @@ return g;
 	}
 
 	return g;
-	*/
 }
 
 
@@ -218,6 +211,7 @@ graph *graph_reset_seen(graph *g){
 	while(array_1d_has_value(g->entries, pos)){
 		current_node = array_1d_inspect_value(g->entries, pos);
 			current_node->seen = false;
+			return g;
 
 		pos++;
 	}
@@ -292,7 +286,7 @@ dlist *graph_neighbours(const graph *g,const node *n){
 	node *current_node = NULL;
 	while(array_1d_has_value(g->entries, pos)){
 		current_node = array_1d_inspect_value(g->entries, pos);
-		if(strcmp(current_node->name, n->name) == 0){
+		if(current_node->name == n->name){
 			return current_node->neighbours;
 		}
 		pos++;
